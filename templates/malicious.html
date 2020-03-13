@@ -1,0 +1,73 @@
+{% extends 'layout.html' %} {% block content %} {% include 'partials/back.html'
+%}
+
+<div class="alert alert-danger">
+  <h4 class="alert-heading"><i class="fas fa-biohazard"></i> Malicious</h4>
+  <p>
+    The link <strong>{{ url }}</strong> might potentially contain malware and can be harmful to your system.
+  </p>
+  <hr />
+  <p>Don't visit the URL.</p>
+</div>
+
+
+<div class="my-3">
+  {% if not empty %}
+  <div class="accordion" id="accordionExample">
+    <div class="card" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+      aria-controls="collapseOne">
+      <div class="card-header" id="headingOne">
+        <h4 class="display-5 mb-0 text-secondary">
+          Domain Details
+          <small class="text-uppercase float-right">click to expand</small>
+        </h4>
+      </div>
+
+      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col" class="text-center">Category</th>
+              <th scope="col" class="text-center">Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for key, value in info.items() %}
+            {% if key == 'Registrant Details' %}
+            <tr>
+              <th scope="row">{{ key }}</th>
+              <td class="text-left">
+                {% for rkey, rval in value.items() %}
+                <div>
+                  <strong>{{ rkey | capitalize}}: </strong>
+                  <span class="ml-3">{{ rval }}</span>
+                  <hr />
+                </div>
+                {% endfor %}
+              </td>
+            </tr>
+
+            {% else %}
+            <tr>
+              <th scope="row">{{ key }}</th>
+              <td class="text-left">{{ value }}</td>
+            </tr>
+            {% endif %} {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <div class="card-header">
+    <h4 class="display-5 mb-0 text-secondary">
+      Domain Details Unavailable
+    </h4>
+  </div>
+  {% endif %}
+
+
+</div>
+
+
+{% endblock content %}
